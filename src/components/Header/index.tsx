@@ -12,7 +12,9 @@ export function Header() {
           'lg:text-7xl/normal lg:py-12',
         )}
       >
-        <Link href='#'>The Blog</Link>
+        <Link href="/" className="group">
+          The <span className="group-hover:text-blue-500 transition duration-300">Blog</span>
+        </Link>
       </h1>
     </header>
   )
