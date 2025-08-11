@@ -1,8 +1,8 @@
-import { styleText } from "util";
+import chalk from "chalk";
 
 export function logColor(...msg: (string | number)[]) {
   const messages = msg
-    .map((message) => styleText(["bgGreen", "whiteBright"], `${message}`))
+    .map((message) => chalk.bgBlue.whiteBright(message))
     .join(" ");
-  console.log(styleText("green", messages));
+  console.log(messages);
 }
