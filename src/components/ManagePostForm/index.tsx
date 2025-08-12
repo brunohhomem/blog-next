@@ -5,6 +5,7 @@ import { Button } from "../Button";
 import { InputCheckbox } from "../InputCheckBox";
 import { InputText } from "../InputText";
 import { MarkdownEditor } from "../MarkdownEditor";
+import { ImageUploader } from "../admin/ImageUploader";
 
 export function ManagePostForm() {
   const [contentValue, setContentValue] = useState('');
@@ -12,6 +13,9 @@ export function ManagePostForm() {
   return (
     <form action='' className='mb-16'>
       <div className='flex flex-col gap-6'>
+
+        <ImageUploader />
+
         <InputText
           labelText='Nome'
           placeholder='Digite seu nome'
