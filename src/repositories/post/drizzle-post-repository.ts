@@ -1,11 +1,16 @@
 import { PostModel } from "@/models/post/post-model";
 import { PostRepository } from "./post-repository";
 import { drizzleDb } from "@/db/drizzle";
+import { asyncDelay } from "@/utils/async-delay";
 import { postsTable } from "@/db/drizzle/schemas";
 import { eq } from "drizzle-orm";
 
+const simulateWaitMs = Number(process.env.SIMULATE_WAIT_IN_MS) || 0;
+
 export class DrizzlePostRepository implements PostRepository {
   async findAllPublic(): Promise<PostModel[]> {
+    await asyncDelay(simulateWaitMs, true);
+
     const posts = await drizzleDb.query.posts.findMany({
       orderBy: (posts, { desc }) => desc(posts.createdAt),
       where: (posts, { eq }) => eq(posts.published, true),
@@ -15,6 +20,8 @@ export class DrizzlePostRepository implements PostRepository {
   }
 
   async findBySlugPublic(slug: string): Promise<PostModel> {
+    await asyncDelay(simulateWaitMs, true);
+
     const post = await drizzleDb.query.posts.findFirst({
       where: (posts, { eq, and }) =>
         and(eq(posts.published, true), eq(posts.slug, slug)),
@@ -26,6 +33,8 @@ export class DrizzlePostRepository implements PostRepository {
   }
 
   async findAll(): Promise<PostModel[]> {
+    await asyncDelay(simulateWaitMs, true);
+
     const posts = await drizzleDb.query.posts.findMany({
       orderBy: (posts, { desc }) => desc(posts.createdAt),
     });
@@ -34,6 +43,8 @@ export class DrizzlePostRepository implements PostRepository {
   }
 
   async findById(id: string): Promise<PostModel> {
+    await asyncDelay(simulateWaitMs, true);
+
     const post = await drizzleDb.query.posts.findFirst({
       where: (posts, { eq }) => eq(posts.id, id),
     });
