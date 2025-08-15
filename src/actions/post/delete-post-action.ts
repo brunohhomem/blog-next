@@ -1,13 +1,17 @@
 "use server";
 
-import { drizzleDb } from "@/db/drizzle";
-import { postsTable } from "@/db/drizzle/schemas";
+import { verifyLoginSession } from "@/lib/login/manage-login";
 import { postRepository } from "@/repositories/post";
-import { eq } from "drizzle-orm";
 import { revalidateTag } from "next/cache";
 
 export async function deletePostAction(id: string) {
-  // TODO: checar login do usuário
+  const isAuthenticated = await verifyLoginSession();
+
+  if (!isAuthenticated) {
+    return {
+      error: "Faça login novamente em outra aba",
+    };
+  }
 
   if (!id || typeof id !== "string") {
     return {
@@ -25,19 +29,15 @@ export async function deletePostAction(id: string) {
       };
     }
 
-    if (!post) {
-      return {
-        error: "Erro desconhecido",
-      };
-    }
-
-    await drizzleDb.delete(postsTable).where(eq(postsTable.id, id));
-
-    revalidateTag("posts");
-    revalidateTag(`post-${post.slug}`);
-
     return {
-      error: "",
+      error: "Erro desconhecido",
     };
   }
+
+  revalidateTag("posts");
+  revalidateTag(`post-${post.slug}`);
+
+  return {
+    error: "",
+  };
 }
