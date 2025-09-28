@@ -1,7 +1,6 @@
 'use client';
 
 import { Button } from '@/components/Button';
-import { InputCheckbox } from '@/components/InputCheckbox';
 import { InputText } from '@/components/InputText';
 import { MarkdownEditor } from '@/components/MarkdownEditor';
 import { useActionState, useEffect, useState } from 'react';
@@ -11,6 +10,7 @@ import { createPostAction } from '@/actions/post/create-post-action';
 import { toast } from 'react-toastify';
 import { updatePostAction } from '@/actions/post/update-post-action';
 import { useRouter, useSearchParams } from 'next/navigation';
+import { InputCheckbox } from '@/components/InputCheckBox';
 
 type ManagePostFormUpdateProps = {
   mode: 'update';
